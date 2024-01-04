@@ -60,6 +60,15 @@ const Header = () => {
     setShowSearch(false);
   };
 
+  const navigationHandler = (type) => {
+    if (type === "movies") {
+      navigate("/explore/movie");
+    } else {
+      navigate("/explore/tv");
+    }
+    setMobileMenu(false);
+  };
+
   return (
     <header className={`header ${mobileMenu ? "mobile-view" : ""} ${show}`}>
       <ContentWrapper>
