@@ -14,6 +14,38 @@ const SearchResult = () => {
   const [loading, setLoading] = useState(false);
   const { query } = useParams();
 
+  const fetchInitialData = () => {
+    setLoading(true);
+    fetchDataFromAPI(`/search/multi?query=${query}&page=${pageNum}`).then(
+      (res) => {
+        setData(res);
+        setPageNum((prev) => prev + 1);
+        setLoading(false);
+      }
+    );
+  };
+
+  const fetchNextPageData = () => {
+    fetchDataFromAPI(`/search/multi?query=${query}&page=${pageNum}`).then(
+      (res) => {
+        if (data?.results) {
+          setData({
+            ...data,
+            results: [...data?.results, ...res?.results],
+          });
+        } else {
+          setData(res);
+        }
+        setPageNum((prev) => prev + 1);
+      }
+    );
+  };
+
+  useEffect(() => {
+    setPageNum(1);
+    fetchInitialData();
+  }, [query]);
+
   return (
     <div className="search-results-page">
       {loading && <Spinner initial={true} />}
