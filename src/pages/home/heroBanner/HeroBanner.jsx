@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./herobanner.scss";
-import { useNavigate } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch";
 import { useSelector } from "react-redux";
-import Img from "../../../components/lazyLoadImage/Img";
+import { useNavigate } from "react-router-dom";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
+import Img from "../../../components/lazyLoadImage/Img";
+import useFetch from "../../../hooks/useFetch";
+import "./herobanner.scss";
 
 const HeroBanner = () => {
   const [background, setBackground] = useState("");
@@ -26,6 +26,12 @@ const HeroBanner = () => {
 
   const searchQueryHandler = (synEvent) => {
     if (synEvent.key === "Enter" && query.length > 0) {
+      navigate(`/search/${query}`);
+    }
+  };
+
+  const onClickHandler = () => {
+    if (query.length > 0) {
       navigate(`/search/${query}`);
     }
   };
@@ -58,7 +64,7 @@ const HeroBanner = () => {
               }}
               onKeyUp={searchQueryHandler}
             />
-            <button>Search</button>
+            <button onClick={onClickHandler}>Search</button>
           </div>
         </div>
       </ContentWrapper>
